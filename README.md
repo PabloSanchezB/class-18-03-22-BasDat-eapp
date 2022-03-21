@@ -1,5 +1,5 @@
 # Clase Viernes 18-03-22
-## Implementación base de datos [1:23:00]
+## Implementación base de datos
 
 poetry add fastapi uvicorn[standard] SQLAlchemy alembic
 
