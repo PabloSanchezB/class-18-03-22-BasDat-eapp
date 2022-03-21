@@ -27,4 +27,19 @@ docker run --name my-db-postgresql -e POSTGRES_USER=postgres -e POSTGRES_DB=mydb
 
 docker run --name container_name -e variable_de_entorno_1=valor -e variable_de_entorno_2=valor -p puerto_entrada:puerto_salida -d imagen_a_descargar:version_especifica 
 
+Inicializar Alembic(esto creará nuevos directorios dentro del folder de la app):
+
+poetry run alembic init alembic
+
+Dentro del directorio alembic se iran guardando las versiones (directorio versions). El archivo que ahora nos interesa es alembic/env.py. Este es el archivo para hacer las migraciones. Una vez hayamos modificado el alembic/env.py, autogeneramos nuestro archivo de migración con el siguiente:
+
+poetry run alembic revision --autogenerate
+
+El comando de arriba generará el archivo alembic/versions/90ba271921e4_.py, en donde estara la descripción o "traducción alembic" de las tablas que definimos. Ej: las que definimos en products/models.py
+
+Luego ejecutamos:
+
+poetry run alembic upgrade head
+
+La cual ejecutará la funcion upgrade en 90ba271921e4_.py y creara las tablas en la base de datos de postgres
 
