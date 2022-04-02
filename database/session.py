@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base #vamos a hacer una conec
 from sqlalchemy.orm import sessionmaker #El que se encarga de crear la sesión
 from core.config import settings #importamos el objeto settings (la instancia cacheada de la clase 
 #Settings)
+from typing import Generator
 
 engine = create_engine(settings.DATABASE_URI) #creamos el motor que crea la conección a la BD
 #recibe como parametro la URI de la BD
@@ -12,3 +13,10 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) #Est
 #(bind=engine)
 
 Base = declarative_base() #creamos la Base como de tipo declarativa
+
+def get_db_session() -> Generator:
+    try:
+        db=SessionLocal()
+        yield db #Sigue disparando nuevas sesiones
+    finally:
+        db.close() #Cierra la BD al finalizar el programa

@@ -43,3 +43,19 @@ poetry run alembic upgrade head
 
 La cual ejecutará la funcion upgrade en 90ba271921e4_.py y creara las tablas en la base de datos de postgres
 
+database/models.py es un modulo de ayuda para que Alembic encuentre todos los modelos que estoy importando
+
+MODELO DTO (Data Transfer Object)
+
+products/services.py: El modulo de servicios, esa capa intermedia entre los modelos de tablas (de SQLAlchemy) y las APIS
+
+products/router.py: El modulo de rutas (get, delete, post, update...). Aqui se definen los endpoints (URIs). Aqui cada funcion de ruta va a llamar a su correspondiente servicio creado en products/services.py
+
+products/schema.py: Los esquemas de Pydantic. Permiten serializar o deserializar las peticiones hechas desde el cliente al API, convirtiendo JSONs a objetos Python y viceversa (objetos de retorno y entrada de las APIS)
+
+products/validation.py: Para validaciones
+
+Lo de arriba, junto con products/models.py representan la estructura de cualquier folder que guarde tablas
+de base de datos, como en este caso son cart, orders y user.
+
+Recordar que todas las rutas definidas en los diferentes router.py hay que importarlas en el main.py. El main.py es lo que se ejecuta cuando se corre el servidor uvicorn, lo que no este importado en el main.py es como si no existiera para el servidor.
