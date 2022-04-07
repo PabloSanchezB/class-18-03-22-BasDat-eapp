@@ -1,6 +1,8 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
+OJO!!!!! Recordar que database/session.py ha sido renombrado por el profe como db.py, pero aclearqui lo seguiremos llamando session.py OJO!!!!!
+
 poetry add fastapi uvicorn[standard] SQLAlchemy alembic
 
 Siguientes 2 lineas: Libs necesarias para poder instalar el psycopg2 (said libs already installed...)
@@ -19,7 +21,7 @@ core: modulo para funcionalidades para toda la aplicación
 
 core/config.py: donde configuramos como nos conectamos a la base de datos
 
-database/session.py: donde creamos la sesión para establecer la conección con la base de datos
+database/session.py: donde creamos la sesión para establecer la conección con la base de datos. OJO!!! El profe ha renombrado este archivo como db.py, pero aqui lo seguiremos llamando session.py
 
 Correr (montar el contenedor) (y descargar) la imagen de postgres con Docker (todo otro contenedor de postgres tiene que estar detenido) (los nombres de las variables de entorno estan en la pagina de docker hub de postgres y los valores son los que estan en core/config.py) (si no se le agrega ninguna versión despues de imagen_a_descargar entonces descarga la ultima versión):
 
@@ -59,3 +61,23 @@ Lo de arriba, junto con products/models.py representan la estructura de cualquie
 de base de datos, como en este caso son cart, orders y user.
 
 Recordar que todas las rutas definidas en los diferentes router.py hay que importarlas en el main.py. El main.py es lo que se ejecuta cuando se corre el servidor uvicorn, lo que no este importado en el main.py es como si no existiera para el servidor.
+
+Cuando el main.py ya este listo para probar:
+
+OJO!!! Antes de correr el uvicorn hay que poner a correr el container de la base de datos (postgres)
+
+poetry run uvicorn main:app --host 0.0.0.0 --port 8000
+
+Tener en cuenta que al dar numeros de puertos demasiado bajos (84, por ejemplo), puede salir acceso denegado, por eso se recomienda siempre usar el puerto 8000
+
+Cuando este corriendo el servidor ir en el browser a "localhost:8000/docs"
+
+core/hashing.py: modulo para encriptar passwords. Requiere que instalemos los paquetes "passlib" y "argon2"
+
+poetry add argon2-cffi
+
+poetry add passlib[argon2]
+
+Y tambien el validador de email:
+
+poetry add pydantic[email]

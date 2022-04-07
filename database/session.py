@@ -14,6 +14,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) #Est
 
 Base = declarative_base() #creamos la Base como de tipo declarativa
 
+#Generador de conecciones a base de datos
 def get_db_session() -> Generator:
     try:
         db=SessionLocal()

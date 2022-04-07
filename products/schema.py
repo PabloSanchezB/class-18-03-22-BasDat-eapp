@@ -34,5 +34,32 @@ class Category(CategoryInDBBase):
 class CategoryInDB(CategoryInDBBase):
     pass
 
+class ProductBase(BaseModel):
+    name: str
+    quantity: int
+    description: str
+    price: float
+    category_id: int
+
+class ProductCreate(ProductBase):
+    pass
+
+class ProductUpdate(ProductBase):
+    pass
+
+class ProductInDBBase(ProductBase):
+    id: int
+    category: Category #Esta hace referencia a la clase Category de la linea 31
+    class Config:
+        orm_mode = True #Este ORM es el que hace la conversion de modelo de sqlalchemy a esquema de pydantic:
+    #Las funciones de servicios devuelven modelos, los cuales son recibidos por una funcion de ruta, la cual
+    #devuelve un esquema. Esta conversion no seria posible sin el orm_mode = True (la funcion servicio se llama
+    #dentro de la funcion ruta)
+
+class Product(ProductInDBBase):
+    pass
+
+class ProductInDB(ProductInDBBase):
+    pass
 
 

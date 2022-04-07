@@ -30,3 +30,5 @@ class Product(Base):
     #borro una categoria en la tabla "category", todos los productos asociados a esa categoria también
     #se borran 
     category = relationship("Category", back_populates="product")
+    #order_details = relationship("OrderDetails", back_populates="product_order_details")
+    #cart_items = relationship("CartItems", back_populates="products")
