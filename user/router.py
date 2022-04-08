@@ -14,6 +14,10 @@ api_router = APIRouter(
 )
 
 
+#OJO!!! Si nosotros en esta función no especificamos un response_model, la función devolvera el usuario
+#tal cual esta guardado en la base de datos, es decir, lo devolverá con todo y contraseña, aunque esta, por
+#supuesto aparecerá encriptada. Si no queremos que aparezca, le decimos que el response_model sea
+#schema.User, el cual no incluye la contraseña.
 @api_router.post('/user/', status_code=status.HTTP_201_CREATED, response_model=schema.User)
 async def create_user_registration(user_in: schema.UserCreate, db_session: Session = Depends(session.get_db_session)):
     # Read More : Pydantic Validation with Database (https://github.com/tiangolo/fastapi/issues/979)
