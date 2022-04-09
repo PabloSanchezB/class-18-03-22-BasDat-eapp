@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from . import models
 from . import schema
+from core import hashing
 
 #Crear nuevo usuario
 async def new_user_register(user_in: schema.UserCreate, db_session: Session) -> models.User:
@@ -29,4 +30,8 @@ async def delete_user_by_id(user_id: int, db_session: Session):
     db_session.query(models.User).filter(models.User.id == user_id).delete()
     db_session.commit()
 
-#async def update_user_by_id(user_id: int, db_session: Session)
+async def update_user_by_id(user_id:int, user: schema.UserUpdate, db_session:Session):
+    hashed = hashing.get_password_hash(user.password)
+    user.password = hashed
+    db_session.query(models.User).filter(models.User.id == user_id).update(user.dict())
+    db_session.commit()

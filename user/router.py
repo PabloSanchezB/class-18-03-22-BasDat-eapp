@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, List
 
 from fastapi import APIRouter, Depends, status, Response, HTTPException
 from sqlalchemy.orm import Session
@@ -47,3 +47,20 @@ async def delete_user_by_id(user_id:int, db_session: Session = Depends(session.g
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid user ID")
     
     return await services.delete_user_by_id(user_id, db_session)
+
+@api_router.put("/user/{user_id}", response_model = schema.User)
+async def update_user_by_id(user_id:int, user_in: schema.UserUpdate, db_session: Session = Depends(session.get_db_session)) -> Any:
+    user= await services.get_user_by_id(user_id, db_session)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid user ID")
+    
+    user2 = await validation.verify_email_exist(user_in.email, db_session)
+    if user2 and user2.id != user_id:
+        raise HTTPException(
+            status_code=400,
+            detail="The user with this email already exists in the system.",
+        )
+    
+    await services.update_user_by_id(user_id, user_in, db_session)
+
+    return await services.get_user_by_id(user_id, db_session)

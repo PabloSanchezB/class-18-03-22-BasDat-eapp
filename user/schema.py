@@ -8,6 +8,8 @@ class UserCreate(UserBase):
     password: str #El password no se debe estar mostrando siempre, solo cuando se necesite,
     #por ejemplo, al crear (registrar) un nuevo usuario
 
+class UserUpdate(UserBase):
+    password: str
 
 #Este es para guardarlo en la BD
 class UserInDBBase(UserBase):
