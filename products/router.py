@@ -52,6 +52,16 @@ async def delete_category_by_id(category_id:int, db_session: Session = Depends(s
     return await services.delete_category_by_id(category_id, db_session)
     #Pero delete_category_by_id no retorna nada????? Entonces?????
 
+@api_router.put("/products/category/{category_id}")
+async def update_category_by_id(category_id:int, category_in: schema.CategoryUpdate, db_session: Session = Depends(session.get_db_session)) -> Any:
+    category= await services.get_category_by_id(category_id, db_session)
+    if not category:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid category ID")
+    
+    await services.update_category_by_id(category_id, category_in, db_session)
+
+    return await services.get_category_by_id(category_id, db_session)
+
 @api_router.post('/products/', status_code=status.HTTP_201_CREATED)
 async def create_product(product_in: schema.ProductCreate, db_session: Session = Depends(session.get_db_session)):
     category = await validation.verify_category_exist(product_in.category_id, db_session)
@@ -67,3 +77,36 @@ async def create_product(product_in: schema.ProductCreate, db_session: Session =
 @api_router.get('/products/', response_model=List[schema.Product])
 async def get_all_products(db_session: Session = Depends(session.get_db_session)):
     return await services.get_all_products(db_session)
+
+@api_router.get("/products/{product_id}", response_model=schema.Product)
+async def get_product_by_id(product_id:int, db_session: Session = Depends(session.get_db_session)):
+    product= await services.get_product_by_id(product_id, db_session)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
+    
+    return product
+
+@api_router.delete("/products/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_product_by_id(product_id:int, db_session: Session = Depends(session.get_db_session)):
+    product= await services.get_product_by_id(product_id, db_session)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid product ID")
+    
+    return await services.delete_product_by_id(product_id, db_session)
+
+@api_router.put("/products/{product_id}")
+async def update_product_by_id(product_id:int, product_in: schema.ProductUpdate, db_session: Session = Depends(session.get_db_session)) -> Any:
+    product= await services.get_product_by_id(product_id, db_session)
+    if not product:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid product ID")
+    
+    category = await validation.verify_category_exist(product_in.category_id, db_session)
+    if not category:
+        raise HTTPException(
+            status_code=404,
+            detail="You have provided invalid category id."
+        )
+    
+    await services.update_product_by_id(product_id, product_in, db_session)
+
+    return await services.get_product_by_id(product_id, db_session)

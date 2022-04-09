@@ -28,3 +28,5 @@ async def get_user_by_id(user_id: int, db_session: Session) -> Optional[models.U
 async def delete_user_by_id(user_id: int, db_session: Session):
     db_session.query(models.User).filter(models.User.id == user_id).delete()
     db_session.commit()
+
+#async def update_user_by_id(user_id: int, db_session: Session)

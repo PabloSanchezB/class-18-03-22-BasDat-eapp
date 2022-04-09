@@ -39,3 +39,11 @@ async def get_all_users(db_session: Session = Depends(session.get_db_session)):
 @api_router.get('/user/{user_id}', response_model=schema.User)
 async def get_user_by_id(user_id: int, db_session: Session = Depends(session.get_db_session)):
     return await services.get_user_by_id(user_id, db_session)
+
+@api_router.delete("/user/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_user_by_id(user_id:int, db_session: Session = Depends(session.get_db_session)):
+    user= await services.get_user_by_id(user_id, db_session)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid user ID")
+    
+    return await services.delete_user_by_id(user_id, db_session)

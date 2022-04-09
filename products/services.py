@@ -53,6 +53,10 @@ async def delete_category_by_id(category_id:int, db_session:Session): #No retorn
     db_session.commit() #Siempre que se haga un cambio en los datos (insertar o eliminar), debemos
     #usar .commit()
 
+async def update_category_by_id(category_id:int, category: schema.CategoryUpdate, db_session:Session):
+    db_session.query(models.Category).filter(models.Category.id == category_id).update(category.dict())
+    db_session.commit()
+
 async def create_new_product(product: schema.ProductCreate, db_session: Session) -> models.Product:
     new_product = models.Product(name=product.name, quantity=product.quantity,
                                  description=product.description, price=product.price,
@@ -69,5 +73,15 @@ async def get_all_products(db_session: Session) -> List[models.Product]:
     products = db_session.query(models.Product).all()
     return products
 
+async def get_product_by_id(product_id:int, db_session:Session) -> models.Product:
+    product = db_session.query(models.Product).get(product_id)
+    return product
 
+async def delete_product_by_id(product_id:int, db_session:Session): 
+    db_session.query(models.Product).filter(models.Product.id == product_id).delete()
+    db_session.commit()
+
+async def update_product_by_id(product_id:int, product: schema.ProductUpdate, db_session:Session):
+    db_session.query(models.Product).filter(models.Product.id == product_id).update(product.dict())
+    db_session.commit()
 
