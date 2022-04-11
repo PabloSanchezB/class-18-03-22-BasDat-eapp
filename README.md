@@ -1,7 +1,21 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
+[CLASE 0:47:00]
+
+NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
+
+pip install -r .\requirements.txt
+
+El equivalante al requirements.txt en poetry debe ser el poetry.lock, asi que el comando en poetry debe ser algo como:
+
+poetry add -r .\poetry.lock
+
+..... Pero no estoy seguro......
+
 OJO!!!!! Recordar que database/session.py ha sido renombrado por el profe como db.py, pero aclearqui lo seguiremos llamando session.py OJO!!!!!
+
+OJO!!!! Hay discrepancias entre el repo subido por el profe y lo de aqui.... discrepancias que no he visto al profe digitar en ninguna clase. Porsilasmoscas... solo voy a digitar aqui lo que el profe escriba EN CLASE. Si al final esto no funciona, significa que dichas discrepancias si eran necesarias despues de todo......
 
 poetry add fastapi uvicorn[standard] SQLAlchemy alembic
 
@@ -81,3 +95,14 @@ poetry add passlib[argon2]
 Y tambien el validador de email:
 
 poetry add pydantic[email]
+
+SEGURIDAD Y TOKENS (https://fastapi.tiangolo.com/tutorial/security/first-steps/)
+
+Necesitamos instalar las siguientes librerias: "python-multipart", "python-jose[cryptography]" (para encriptar y desencriptar tokens) y "passlib[bcrypt]" 
+
+poetry add python-multipart
+
+poetry add python-jose[cryptography]
+
+poetry add passlib[bcrypt]
+
