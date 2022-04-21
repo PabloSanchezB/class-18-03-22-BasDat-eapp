@@ -35,3 +35,16 @@ async def update_user_by_id(user_id:int, user: schema.UserUpdate, db_session:Ses
     user.password = hashed
     db_session.query(models.User).filter(models.User.id == user_id).update(user.dict())
     db_session.commit()
+
+def authenticate(*, email:str, password:str, db_session:Session) -> Optional[models.User]:
+    user = db_session.query(models.User).filter(models.User.email == email).first()
+
+    if not user:
+        return None
+
+    if not hashing.verify_password(password, user.password):
+        return None
+    
+    return user
+    
+

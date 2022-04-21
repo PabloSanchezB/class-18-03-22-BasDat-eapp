@@ -1,7 +1,7 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
-[CLASE 0:47:00]
+Clase 0:56:36
 
 NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
 
@@ -105,4 +105,8 @@ poetry add python-multipart
 poetry add python-jose[cryptography]
 
 poetry add passlib[bcrypt]
+
+Despues vamos al core/config.py y agregamos las variables de entorno necesarias para la seguridad. Para el JWT_SECRET nos vamos a https://passwordsgenerator.net/ y generamos un password de, digamos, 74 caracteres.... De-seleccionamos "include symbols" y le damos generate password. La copiamos y la usamos para JWT_SECRET (podemos modificarla o extenderla aun mas si queremos.....) 
+
+Creamos core/security.py
 
