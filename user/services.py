@@ -36,8 +36,12 @@ async def update_user_by_id(user_id:int, user: schema.UserUpdate, db_session:Ses
     db_session.query(models.User).filter(models.User.id == user_id).update(user.dict())
     db_session.commit()
 
+#Por que esta de aqui abajo no es async??????
+#OJO!!! Devuelve un Optional[] porque puede que no devuelva nada (no se encontró usuario con dicho email
+#o la contraseña es incorrecta....)
 def authenticate(*, email:str, password:str, db_session:Session) -> Optional[models.User]:
     user = db_session.query(models.User).filter(models.User.email == email).first()
+    #first(): que nos retorne solo el primero que encuentre
 
     if not user:
         return None

@@ -5,7 +5,7 @@ pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 
 def verify_password(plain_password, hashed_password):
-    return pwd_context.verify((plain_password, hashed_password))
+    return pwd_context.verify(plain_password, hashed_password)
     #.verify() toma el texto del plain_password y lo compara con el hashed_password desencriptado
 
 

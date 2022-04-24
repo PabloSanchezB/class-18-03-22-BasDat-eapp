@@ -1,8 +1,6 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
-Clase 0:56:36
-
 NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
 
 pip install -r .\requirements.txt
@@ -63,7 +61,7 @@ database/models.py es un modulo de ayuda para que Alembic encuentre todos los mo
 
 MODELO DTO (Data Transfer Object)
 
-products/services.py: El modulo de servicios, esa capa intermedia entre los modelos de tablas (de SQLAlchemy) y las APIS
+products/services.py: El modulo de servicios, esa capa intermedia entre los modelos de tablas (de SQLAlchemy) y las APIS. Es donde va "la logica del negocio"
 
 products/router.py: El modulo de rutas (get, delete, post, update...). Aqui se definen los endpoints (URIs). Aqui cada funcion de ruta va a llamar a su correspondiente servicio creado en products/services.py
 
@@ -80,7 +78,7 @@ Cuando el main.py ya este listo para probar:
 
 OJO!!! Antes de correr el uvicorn hay que poner a correr el container de la base de datos (postgres)
 
-poetry run uvicorn main:app --host 0.0.0.0 --port 8000
+poetry run uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 Tener en cuenta que al dar numeros de puertos demasiado bajos (84, por ejemplo), puede salir acceso denegado, por eso se recomienda siempre usar el puerto 8000
 
@@ -110,3 +108,16 @@ Despues vamos al core/config.py y agregamos las variables de entorno necesarias 
 
 Creamos core/security.py
 
+Luego creamos el modulo/directorio auth y dentro de el auth/router.py. Aqui es donde crearemos nuestro login, que no es mas que una funcion de ruta de metodo post. Tambien creamos el servicio correspondiente en (OJO!!!!!) user/services.py
+
+NOTA: "Auth" viene de "Authorization"
+
+Luego importamos el respectivo router en el main.py
+
+Ahora hay que darle seguridad a los endpoints que queramos proteger. Para esto tenemos que hacer que los endpoint a proteger sean dependientes de tener el usuario logeado. 
+
+OJO!!! Aparentemente ES OBLIGATORIO llamar "current_user" al parametro que recibe al usuario logeado en cada uno de los endpoint que queramos proteger....
+
+En la pagina de JWT, nosotros podemos pegar un token generado y la pagina lo decodifica. Lo que mas nos interesa es lo que esta en el sub, que en el caso de esta app de aqui, es el email del usuario. (Estudiar el codigo para que veamos como es que el email del usuario queda metido al fin en el sub del token...)
+
+Para poder insertar el token en el header de la petición, tenemos que usar postman. El mtoken se ingresa con la clave "Authorization" y con el valor <tipo de token> <string del token>. En nuestro caso seria "Bearer <string del token>". Al pegar un body, tenemos que especificar que es JSON. 

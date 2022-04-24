@@ -9,6 +9,10 @@ from database import session #database/session.py
 from . import schema
 from . import services
 from . import validation
+from core import security #Para importar la seguridad
+from user import schema as user_schema #Notese que necesitamos el schema de user, pero como arriba estamos 
+#importando el schema de products (from . import schema), entonces al schema de user necesitamos ponerle un
+#sobrenombre (Lo mismo que sucede con todos los router.py que toca importar en el main.py)
 
 #Este api_router no deberia ir abajo de todo??? NO!!!!! Lo que va debajo de todo es el
 #app.include_router(api_router), pero ese NO VA AQUI, va en el main.py, es decir, este archivo
@@ -42,8 +46,12 @@ async def get_category_by_id(category_id:int, db_session: Session = Depends(sess
     
     return category
 
+#Otra con seguridad. Lo unico que hay que hacer para ponerle seguridad a una ruta es ponerle
+#"current_user:user_schema.User = Depends(security.get_current_user)" como parametro adicional
+#OJO!!! Aparentemente ES OBLIGATORIO llamar al parametro "current_user"...
 @api_router.delete("/products/category/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_category_by_id(category_id:int, db_session: Session = Depends(session.get_db_session)):
+async def delete_category_by_id(category_id:int, db_session: Session = Depends(session.get_db_session),
+                                    current_user:user_schema.User = Depends(security.get_current_user)):
     #Antes de eliminar, hay que saber si está o no...
     category= await services.get_category_by_id(category_id, db_session)
     if not category:
@@ -62,8 +70,15 @@ async def update_category_by_id(category_id:int, category_in: schema.CategoryUpd
 
     return await services.get_category_by_id(category_id, db_session)
 
+#Este es uno de los endpoint que lleva seguridad. Notese que para hacer esto es solo cuestion de que la funcion
+#reciba un schema de tipo User, pero que este User dependa de la funcion get_current_user.
+#Es decir, la ruta no puede ser accesada a menos que nos hayamos logeado con email y contraseña.
+#Notese que al invocar get_current_user esta no recibe ningun parametro, ya que en la definición de la funcion en
+#core/security.py, esta recibe sus dos parametros por defecto (y ambos son con Depend....)
 @api_router.post('/products/', status_code=status.HTTP_201_CREATED)
-async def create_product(product_in: schema.ProductCreate, db_session: Session = Depends(session.get_db_session)):
+async def create_product(product_in: schema.ProductCreate, 
+                            db_session: Session = Depends(session.get_db_session), 
+                            current_user:user_schema.User = Depends(security.get_current_user)):
     category = await validation.verify_category_exist(product_in.category_id, db_session)
     if not category:
         raise HTTPException(
