@@ -120,4 +120,4 @@ OJO!!! Aparentemente ES OBLIGATORIO llamar "current_user" al parametro que recib
 
 En la pagina de JWT, nosotros podemos pegar un token generado y la pagina lo decodifica. Lo que mas nos interesa es lo que esta en el sub, que en el caso de esta app de aqui, es el email del usuario. (Estudiar el codigo para que veamos como es que el email del usuario queda metido al fin en el sub del token...)
 
-Para poder insertar el token en el header de la petición, tenemos que usar postman. El mtoken se ingresa con la clave "Authorization" y con el valor <tipo de token> <string del token>. En nuestro caso seria "Bearer <string del token>". Al pegar un body, tenemos que especificar que es JSON. 
+Para poder insertar el token en el header de la petición, tenemos que usar postman. El mtoken se ingresa con la clave "Authorization" y con el valor [tipo de token] [string del token]. En nuestro caso seria "Bearer [string del token]". Al pegar un body, tenemos que especificar que es JSON. 
