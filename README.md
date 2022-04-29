@@ -4,6 +4,8 @@
 REPO DEL PROFE:
 https://github.com/jjpizarro/ec-app
 
+OJO!! Tener en cuenta la estructura de carpetas cada vez que le demos comandos de consola que generen nuevos archivos, como por ejemplo "poetry run alembic init alembic" o "poetry init", para que asi los archivos generados queden dentro de las carpetas en que tienen que quedar...
+
 OJO!!! Hemos modificado los directorios para que quedaran con la misma estructura del repo del profe. Sin embargo, he movido el main.py de la carpeta "app" mas interior a la carpeta "app" mas exterior, porque como lo tiene el profe no me funcionaba..... No se si el profe se haya equivocado al ubicar el main.py...
 
 NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
@@ -19,6 +21,8 @@ poetry add -r .\poetry.lock
 OJO!!!!! Recordar que database/session.py ha sido renombrado por el profe como db.py, pero aclearqui lo seguiremos llamando session.py OJO!!!!!
 
 OJO!!!! Hay discrepancias entre el repo subido por el profe y lo de aqui.... discrepancias que no he visto al profe digitar en ninguna clase. Porsilasmoscas... solo voy a digitar aqui lo que el profe escriba EN CLASE. Si al final esto no funciona, significa que dichas discrepancias si eran necesarias despues de todo......
+
+Dentro de development creamos la carpeta del proyecto usando mkdir. Nos movemos dentro de la carpeta recien creada y checkeamos la version local de python con "pyenv versions" y "python -V". Le damos la estructura necesaria y le damos "git init" ("generará el oculto ".git") y "poetry init" (generará "pyproject.toml") en el fichero que corresponda. Creamos el repo remoto, seguimos las instrucciones "...or create a new repository on the command line", y luego de conectar a remoto y haber hecho el primer commit a remoto, nos ubicamos en donde este el pyproject.toml y le damos: 
 
 poetry add fastapi uvicorn[standard] SQLAlchemy alembic
 
