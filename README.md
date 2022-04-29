@@ -1,6 +1,11 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
+REPO DEL PROFE:
+https://github.com/jjpizarro/ec-app
+
+OJO!!! Hemos modificado los directorios para que quedaran con la misma estructura del repo del profe. Sin embargo, he movido el main.py de la carpeta "app" mas interior a la carpeta "app" mas exterior, porque como lo tiene el profe no me funcionaba..... No se si el profe se haya equivocado al ubicar el main.py...
+
 NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
 
 pip install -r .\requirements.txt

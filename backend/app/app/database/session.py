@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine #Para crear el motor de concección
 from sqlalchemy.ext.declarative import declarative_base #vamos a hacer una conección tipo declarativa
 from sqlalchemy.orm import sessionmaker #El que se encarga de crear la sesión
-from core.config import settings #importamos el objeto settings (la instancia cacheada de la clase 
+from app.core.config import settings #importamos el objeto settings (la instancia cacheada de la clase 
 #Settings)
 from typing import Generator
 

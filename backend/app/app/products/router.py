@@ -5,12 +5,12 @@ from fastapi import APIRouter, Depends, status, Response, HTTPException
 #Response: Para las respuestas
 from sqlalchemy.orm import Session
 from typing import Any, List
-from database import session #database/session.py
+from app.database import session #database/session.py
 from . import schema
 from . import services
 from . import validation
-from core import security #Para importar la seguridad
-from user import schema as user_schema #Notese que necesitamos el schema de user, pero como arriba estamos 
+from app.core import security #Para importar la seguridad
+from app.user import schema as user_schema #Notese que necesitamos el schema de user, pero como arriba estamos 
 #importando el schema de products (from . import schema), entonces al schema de user necesitamos ponerle un
 #sobrenombre (Lo mismo que sucede con todos los router.py que toca importar en el main.py)
 

@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Float, Text, ForeignKey #importa
 #de sqlalchemy. OJO!! al "tipo de dato" Text
 from sqlalchemy.orm import relationship #recordar que orm=object relational mapping. En este caso,
 #.orm es un subpaquete de la libreria sqlalchemy
-from database.session import Base #La Base de tipo declarativa que creamos en session.py
+from app.database.session import Base #La Base de tipo declarativa que creamos en session.py
 
 
 class Category(Base):

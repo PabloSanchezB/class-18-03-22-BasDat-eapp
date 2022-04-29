@@ -17,10 +17,10 @@ if config.config_file_name is not None:
 #Codigo NUEVO!!! (lo de abajo)
 
 #Importamos lo que hemos creado
-from core.config import settings
-from database.session import Base
-from products.models import Category, Product
-from user.models import User
+from app.core.config import settings
+from app.database.session import Base
+from app.products.models import Category, Product
+from app.user.models import User
 
 #Codigo NUEVO!!! (lo de arriba)
 

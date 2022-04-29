@@ -5,10 +5,10 @@ from typing import List
 from datetime import datetime, timedelta #Para los tiempos de expiración de los tokens
 from sqlalchemy.orm import Session
 from jose import jwt
-from core.config import settings
-from user.models import User
-from database import session #database/session.py
-from auth import schema
+from app.core.config import settings
+from app.user.models import User
+from app.database import session #database/session.py
+from app.auth import schema
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl = "/login") #Instanciamos y le pasamos la url donde estoy haciendo el 
 #login para generar el token. En este caso es "login", pero igual podria ser "/auth/login" o cualquier otra. 

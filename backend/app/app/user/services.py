@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from . import models
 from . import schema
-from core import hashing
+from app.core import hashing
 
 #Crear nuevo usuario
 async def new_user_register(user_in: schema.UserCreate, db_session: Session) -> models.User:
