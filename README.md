@@ -4,9 +4,14 @@
 REPO DEL PROFE:
 https://github.com/jjpizarro/ec-app
 
+PLANTILLA DE TIANGOLO:
+https://github.com/tiangolo/full-stack-fastapi-postgresql/tree/master/%7B%7Bcookiecutter.project_slug%7D%7D
+
 OJO!! Tener en cuenta la estructura de carpetas cada vez que le demos comandos de consola que generen nuevos archivos, como por ejemplo "poetry run alembic init alembic" o "poetry init", para que asi los archivos generados queden dentro de las carpetas en que tienen que quedar...
 
-OJO!!! Hemos modificado los directorios para que quedaran con la misma estructura del repo del profe. Sin embargo, he movido el main.py de la carpeta "app" mas interior a la carpeta "app" mas exterior, porque como lo tiene el profe no me funcionaba..... No se si el profe se haya equivocado al ubicar el main.py...
+OJO!!! Hemos modificado los directorios para que quedaran con la misma estructura del repo del profe y de la plantilla de tiangolo. Debido a la posicion en que ha quedado el main.py, a la hora de correr el uvicorn, debe hacerse como:
+
+poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 NOTA: Al clonar (bajar desde remoto) un repositorio, este se clona sin las dependencias instaladas. TOCA INSTALARLAS. Al trabajar con venv + pip y teniendo el entorno venv activado, el profe corrió el siguiente comando:
 
