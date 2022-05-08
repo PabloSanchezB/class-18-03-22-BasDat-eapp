@@ -6,9 +6,18 @@ from app.user import router as user_router
 from app.auth import router as auth_router
 from app.database import models #Aqui importamos todos lod modelos para que asi Alembic no nos genere errores
 #mas adelante
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title = "Mi App", version = "0.0.1") #Creamos la app instanciando FastAPI, como siempre, y
 #le ponemos los metadatos que queramos (buscar que otros metadatos podemos poner.....)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 app.include_router(product_router.api_router)
 app.include_router(user_router.api_router)

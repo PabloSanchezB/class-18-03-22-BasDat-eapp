@@ -1,6 +1,8 @@
 # Clase Viernes 18-03-22
 ## Implementación base de datos
 
+video clase 0:59:00
+
 REPO DEL PROFE:
 https://github.com/jjpizarro/ec-app
 
@@ -135,3 +137,43 @@ OJO!!! Aparentemente ES OBLIGATORIO llamar "current_user" al parametro que recib
 En la pagina de JWT, nosotros podemos pegar un token generado y la pagina lo decodifica. Lo que mas nos interesa es lo que esta en el sub, que en el caso de esta app de aqui, es el email del usuario. (Estudiar el codigo para que veamos como es que el email del usuario queda metido al fin en el sub del token...)
 
 Para poder insertar el token en el header de la petición, tenemos que usar postman. El mtoken se ingresa con la clave "Authorization" y con el valor [tipo de token] [string del token]. En nuestro caso seria "Bearer [string del token]". Al pegar un body, tenemos que especificar que es JSON. 
+
+DOCKER E IMAGENES
+
+OJO!!! Se recomienda usar las versiones -slim de python: No pesan tanto como las completas pero tampoco son tan raquiticas como las -alpine....
+
+Para crear nuestro Dockerfile nos basamos en esta documentación:
+https://fastapi.tiangolo.com/deployment/docker/#docker-image-with-poetry
+
+OJO!!! Antes de crear la imagen, debemos desinstalar el psycopg2, ya que generará u error al crear la imagen:
+
+poetry remove psycopg2
+
+Y luego debems instalar:
+
+poetry add psycopg2-binary
+
+OJO!!! La desinstalacion e instalacion anteriores YA SE HICIERON EN ESTA APP!!!!!
+
+Para construir la imagen: Estando ubicados en donde esta el Dockerfile:
+
+docker build -t [nombre-de-mi-imagen] .
+
+OJO!!!! Al puntico al final!!!
+
+Para ver lista de imagenes: docker image ls
+
+Para borrar una imagen: docker image rm [primeros-4-digitos-del-image-id]
+Para ver los image id ver la lista de las imagenes
+
+Aqui hay buena documentacion:
+https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker
+
+Para correr nuestra imagen:
+docker run -d --name [mycontainer] -p 80:80 [myimage]
+
+El primer 80 es el puerto del equipo. El segundo 80 es el puerto del contenedor.
+Cuando este corriendo, en el browser: localhost:80/docs
+Nota: el 80 es el puerto por defecto, asi que no hay necesidad de ponerlo, podemos darle: localhost/docs
+
+NOTESE que 2 contenedores corriendom al mismo tiempo no pueden acceder el uno al otro a menos que esten conectados por una red, pero hacer una red es trabajoso, es mas facil y rapido hacer un docker-compose:
